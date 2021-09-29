@@ -14,7 +14,7 @@ class ShowContenidos extends Component
 {
     public $open_edit = false;
 
-    public $beacon;
+    public $beacon, $contenido;
 
 
     protected $rules = [
@@ -44,9 +44,9 @@ class ShowContenidos extends Component
     }
 
     public function edit(Contenido $contenido){
+        
         $this->open_edit = true;
         $this->contenido = $contenido;
-  
     }
 
     public function update(){

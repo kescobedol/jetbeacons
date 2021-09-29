@@ -70,8 +70,10 @@
                                 </td>
                                 <td class="px-6 py-4 ">
                                     <div class="text-sm text-gray-900">
-                                        {{ $contenido->imagen_url }}
+                                         {{-- {{ $contenido->imagen_url }}  --}}
+                                        <img src="{{$contenido->imagen_url}}" alt=""> 
                                     </div>
+
                                 </td>
                                 {{-- <td class="px-6 py-4 text-sm text-gray-500">
                                     <div class="text-sm text-gray-900">
@@ -120,11 +122,9 @@
                                 </td>
 
                                 <td class="px-6 py-4 text-sm font-medium">
-
                                     <a class="btn btn-green" wire:click="edit({{ $contenido }})">
                                         <i class="fas fa-edit"></i>
                                     </a>
-
                                 </td>
                             </tr>
 
@@ -143,5 +143,61 @@
         </x-table>
 
     </div>
+
+    <x-jet-dialog-modal wire:model="open_edit">
+
+        <x-slot name='title'>
+            Editar Contenido 
+        </x-slot>
+
+        <x-slot name='content'>
+            <div class="mb-4">
+                <x-jet-label value="URL de la Imagen" />
+                <x-jet-input wire:model="contenido.imagen_url" type="text" class="w-full" />
+                <x-jet-input-error for="imagen_url" />
+            </div>
+
+            <div class="mb-4">
+                <x-jet-label value="URL" />
+                <x-jet-input wire:model="contenido.url" type="text" class="w-full" />
+                <x-jet-input-error for="url" />
+
+            </div>
+
+
+            <div class="mb-4">
+                <x-jet-label value="Beacon" />
+                <select wire:model="contenido.beacons_id" class="form-control">
+                    @foreach ($beacons as $beacon)
+                        <option value="{{ $beacon->id }}">{{ $beacon->nombre }}</option>
+                    @endforeach
+                </select>
+                <x-jet-input-error for="contenido.beacons_id" />
+
+            </div>
+
+            <div class="mb-4">
+                <x-jet-label value="Estado" />
+                <select wire:model="contenido.estado" class="form-control">
+                    <option value="1">Activo</option>
+                    <option value="2">Inactivo</option>
+                </select>
+            </div>
+
+        </x-slot>
+
+        <x-slot name='footer'>
+
+            <x-jet-button wire:click="update" wire:loading.attr="disabled" class="disabled:opacity-25">
+                Actualizar
+            </x-jet-button>
+
+            <x-jet-secondary-button wire:click="$set('open_edit', false)">
+                Cancelar
+            </x-jet-secondary-button>
+
+        </x-slot>
+
+    </x-jet-dialog-modal>
 
 </div>
